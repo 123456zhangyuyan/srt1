@@ -1,0 +1,380 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>先秦典籍动植物知识图谱</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "SimSun", "Microsoft YaHei", sans-serif;
+        }
+
+        body {
+            background: #fdf6f0 url('https://images.unsplash.com/photo-1589300397852-cb490d83f76d') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+            background-attachment: fixed;
+            background-image: linear-gradient(to bottom, #f5f5dc 0%, #e6e6cc 100%);
+        }
+
+
+        .navbar {
+            background: #8B4513;
+            color: white;
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 80px;
+            background: #fff8dc;
+            border: 1px solid #8B4513;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            min-width: 400px;
+            z-index: 1001;
+            column-count: 2;
+            column-gap: 20px;
+        }
+
+        .dropdown-menu li {
+            padding: 8px 15px;
+            break-inside: avoid;
+            border-bottom: 1px solid #eee0c6;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-menu li {
+            padding: 8px 15px;
+            border-bottom: 1px solid #eee0c6;
+        }
+
+        .dropdown-menu li:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-menu a {
+            color: #8B4513 !important;
+            font-size: 0.95rem;
+            display: block;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-menu a:hover {
+            color: #FFA500 !important;
+            transform: translateX(5px);
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: #FFD700;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            position: relative;
+            padding-bottom: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            background: #FFD700;
+            bottom: 0;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .home-content {
+            padding: 120px 20px 40px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .hero-section {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: rgba(245, 245, 220, 0.95);
+            /* 象牙白 */
+            border-radius: 12px;
+            margin-top: 100px;
+            backdrop-filter: blur(4px);
+            border: 2px solid rgba(139, 69, 19, 0.2);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-section h1 {
+            font-size: 2.8rem;
+            color: #8B4513;
+            margin-bottom: 1rem;
+            text-shadow: 1px 1px 2px #fff;
+        }
+
+        .hero-section p {
+            font-size: 1.2rem;
+            color: #663300;
+            margin-bottom: 2rem;
+        }
+
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+            padding: 2rem;
+        }
+
+        .feature-card {
+            background: #fff8dc;
+            border: 1px solid #ddd8a6;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 280px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card h3 {
+            color: #8B4513;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            text-shadow: 1px 1px 2px #fff;
+        }
+
+        .feature-card p {
+            color: #663300;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .container {
+            display: flex;
+            margin-top: 100px;
+            padding: 20px;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: rgba(245, 245, 220, 0.95);
+            padding: 20px;
+            border-radius: 8px;
+            margin-right: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #8B4513;
+            text-shadow: 1px 1px 2px #fff;
+        }
+
+        #graph-list {
+            list-style: none;
+        }
+
+        #graph-list li {
+            margin: 12px 0;
+            cursor: pointer;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        #graph-list li a {
+            color: #8B4513;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        #graph-list li a::before {
+            content: ' ';
+            position: absolute;
+            left: 0;
+            top: 2px;
+            width: 5px;
+            height: 5px;
+            background: #FFD700;
+            border-radius: 50%;
+        }
+
+        #graph-list li a:hover {
+            color: #FFA500;
+        }
+
+        .main-content {
+            flex: 1;
+            background: rgba(245, 245, 220, 0.95);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-bar {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 10px 15px;
+            font-size: 1rem;
+            border: 2px solid #ddd8a6;
+            border-radius: 6px;
+            background: #fff8dc;
+            color: #333;
+        }
+
+        .search-bar button {
+            padding: 10px 20px;
+            background: #8B4513;
+            color: white;
+            border: 2px solid #ddd8a6;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .search-bar button:hover {
+            background: #A0522D;
+            border-color: #FFD700;
+        }
+
+        .cytoscape-container {
+            width: 100%;
+            height: 600px;
+            background: #fff8dc;
+            border: 1px solid #ddd8a6;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: #fff8dc;
+            color: #8B4513;
+            margin-top: 40px;
+            border-top: 2px solid #ddd8a6;
+        }
+
+        /* 秦朝纹样装饰 */
+        .pattern-border {
+            background: url('https://upload.wikimedia.org/wikipedia/commons/9/9c/Qin_dynasty_seal_pattern.jpg') repeat;
+            background-size: 100px 100px;
+            opacity: 0.05;
+        }
+    </style>
+</head>
+
+<body class="chinese-style">
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="logo">古籍生灵</div>
+        <ul class="nav-links">
+            <li><a href="index.html">首页</a></li>
+            <li class="dropdown">
+                <a>知识图谱 ▼</a>
+                <ul class="dropdown-menu">
+                    <li><a href="./楚辞.html">楚辞</a></li>
+                    <li><a href="./公羊传.html">公羊传</a></li>
+                    <li><a href="./谷梁传.html">谷梁传</a></li>
+                    <li><a href="./管子.html">管子</a></li>
+                    <li><a href="./国语.html">国语</a></li>
+                    <li><a href="./韩非子.html">韩非子</a></li>
+                    <li><a href="./老子.html">老子</a></li>
+                    <li><a href="./礼记.html">礼记</a></li>
+                    <li><a href="./吕氏春秋.html">吕氏春秋</a></li>
+                    <li><a href="./论语.html">论语</a></li>
+                    <li><a href="./孟子.html">孟子</a></li>
+                    <li><a href="./墨子.html">墨子</a></li>
+                    <li><a href="./商君书.html">商君书</a></li>
+                    <li><a href="./尚书.html">尚书</a></li>
+                    <li><a href="./诗经.html">诗经</a></li>
+                    <li><a href="./孙子兵法.html">孙子兵法</a></li>
+                    <li><a href="./吴子.html">吴子</a></li>
+                    <li><a href="./孝经.html">孝经</a></li>
+                    <li><a href="./荀子.html">荀子</a></li>
+                    <li><a href="./晏子春秋.html">晏子春秋</a></li>
+                    <li><a href="./仪礼.html">仪礼</a></li>
+                    <li><a href="./周礼.html">周礼</a></li>
+                    <li><a href="./庄子.html">庄子</a></li>
+                    <li><a href="./左传.html">左传</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav> <!-- 首页内容 -->
+    <main class="home-content">
+        <div class="hero-section">
+            <h1>基于大模型的先秦典籍动植物实体多模态知识图谱</h1>
+            <p>基于大模型构建的多模态知识系统，融合《诗经》《山海经》等典籍中的动植物知识</p>
+            <div class="features">
+                <div class="feature-card">
+                    <h3>智能检索</h3>
+                    <p>支持实体精准查询与关联分析</p>
+                </div>
+                <div class="feature-card">
+                    <h3>可视化展示</h3>
+                    <p>24个主题图谱的动态呈现</p>
+                </div>
+                <div class="feature-card">
+                    <h3>文化传承</h3>
+                    <p>解析先秦时期生物认知体系</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+        <p>© 2025 古籍生灵研究组 | 基于大模型的先秦典籍动植物实体多模态知识图谱</p>
+    </footer>
+</body>
+
+</html>

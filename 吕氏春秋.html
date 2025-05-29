@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>吕氏春秋知识图谱</title>
+  <link rel="stylesheet" href="styles.css"> <!-- 引入 CSS 文件 -->
+</head>
+
+<body>
+  <nav class="navbar">
+    <div class="logo">吕氏春秋知识图谱</div>
+    <ul class="nav-links">
+      <li><a href="index.html">首页</a></li>
+      <li class="dropdown">
+        <a>知识图谱 ▼</a>
+        <ul class="dropdown-menu">
+          <li><a href="./楚辞.html">楚辞</a></li>
+          <li><a href="./公羊传.html">公羊传</a></li>
+          <li><a href="./谷梁传.html">谷梁传</a></li>
+          <li><a href="./管子.html">管子</a></li>
+          <li><a href="./国语.html">国语</a></li>
+          <li><a href="./韩非子.html">韩非子</a></li>
+          <li><a href="./老子.html">老子</a></li>
+          <li><a href="./礼记.html">礼记</a></li>
+          <li><a href="./吕氏春秋.html">吕氏春秋</a></li>
+          <li><a href="./论语.html">论语</a></li>
+          <li><a href="./孟子.html">孟子</a></li>
+          <li><a href="./墨子.html">墨子</a></li>
+          <li><a href="./商君书.html">商君书</a></li>
+          <li><a href="./尚书.html">尚书</a></li>
+          <li><a href="./诗经.html">诗经</a></li>
+          <li><a href="./孙子兵法.html">孙子兵法</a></li>
+          <li><a href="./吴子.html">吴子</a></li>
+          <li><a href="./孝经.html">孝经</a></li>
+          <li><a href="./荀子.html">荀子</a></li>
+          <li><a href="./晏子春秋.html">晏子春秋</a></li>
+          <li><a href="./仪礼.html">仪礼</a></li>
+          <li><a href="./周礼.html">周礼</a></li>
+          <li><a href="./庄子.html">庄子</a></li>
+          <li><a href="./左传.html">左传</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+  <div class="container">
+    <div id="kg-container"></div>
+
+    <div class="sidebar">
+      <div class="search-box">
+        <input type="text" id="search-input" placeholder="输入节点名称搜索...">
+        <button id="search-btn">搜索</button>
+        <select id="type-filter">
+          <option value="">所有类型</option>
+          <option value="animal">动物</option>
+          <option value="plant">植物</option>
+          <option value="book">书籍</option>
+        </select>
+      </div>
+
+      <h3>搜索结果</h3>
+      <div id="results"></div>
+    </div>
+  </div>
+  <script>   window.addEventListener('hashchange', function () {
+      const graphName = window.location.hash.substring(1);
+      if (graphData[graphName]) {
+        currentGraph = graphName;
+        initGraph(graphName);
+        document.querySelector('.main-content').scrollIntoView({
+          behavior: 'smooth'
+        });
+      }
+    });
+    if (window.location.hash) {
+      const initialGraph = window.location.hash.substring(1);
+      if (graphData[initialGraph]) {
+        currentGraph = initialGraph;
+      }
+    }
+    initGraph(currentGraph);
+  </script>
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+  <script src="吕氏春秋.js"></script>
+</body>
+
+</html>
